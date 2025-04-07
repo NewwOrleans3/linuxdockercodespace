@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  ubuntu-xfce:
+    image: dorowu/ubuntu-desktop-lxde-vnc
+    ports:
+      - "5901:5901"  # VNC порт
+      - "6080:80"    # noVNC порт
+    environment:
+      - USER=root
+      - PASSWORD=root  # Задайте свой пароль
+    volumes:
+      - shared-data:/home/root/shared
+
+volumes:
+  shared-data:
