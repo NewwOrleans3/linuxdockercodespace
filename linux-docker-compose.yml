@@ -2,12 +2,13 @@ version: '3.8'
 
 services:
   debian-vnc:
-    image: dorowu/ubuntu-desktop-lxde-vnc  # Можешь заменить на свой образ, например, Debian
+    image: debian:bullseye  # Используется образ Debian
     ports:
       - "5901:5901"  # Порт для VNC
       - "6080:6080"  # Порт для noVNC
     environment:
-      - VNC_PASSWORD=yourpassword  # Установи пароль для VNC
+      - VNC_PASSWORD=yourpassword  # Пароль для подключения через VNC
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
+    command: bash -c "apt-get update && apt-get install -y xfce4 x11vnc xvfb curl git && startxfce4 & x11vnc -display :0 -passwd yourpassword -forever -bg"
     restart: always
