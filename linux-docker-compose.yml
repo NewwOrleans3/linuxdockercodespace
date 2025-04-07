@@ -10,5 +10,12 @@ services:
       - VNC_PASSWORD=yourpassword  # Пароль для подключения через VNC
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
-    command: bash -c "apt-get update && apt-get install -y xfce4 x11vnc xvfb curl git && startxfce4 & x11vnc -display :0 -passwd yourpassword -forever -bg"
+    command: >
+      bash -c "
+        apt-get update &&
+        apt-get install -y xfce4 x11vnc xvfb curl git &&
+        startxfce4 & 
+        export DISPLAY=:0 &&
+        x11vnc -display :0 -passwd yourpassword -forever -bg
+      "
     restart: always
