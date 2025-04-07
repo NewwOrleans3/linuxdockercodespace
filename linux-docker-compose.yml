@@ -1,16 +1,19 @@
-version: '3'
-
-services:
-  ubuntu-xfce:
-    image: dorowu/ubuntu-desktop-lxde-vnc
-    ports:
-      - "5901:5901"  # VNC порт
-      - "6080:80"    # noVNC порт
-    environment:
-      - USER=root
-      - PASSWORD=root  # Задайте свой пароль
-    volumes:
-      - shared-data:/home/root/shared
-
-volumes:
-  shared-data:
+{
+  "name": "Debian with XFCE and VNC",
+  "image": "debian:bullseye",
+  "portsAttributes": {
+    "5901": {
+      "label": "VNC",
+      "onAutoForward": "openBrowser"
+    },
+    "6080": {
+      "label": "noVNC",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "extensions": [
+    "ms-vscode-remote.remote-containers"
+  ],
+  "settings": {},
+  "postCreateCommand": "apt-get update && apt-get install -y xfce4 x11vnc xvfb curl git"
+}
